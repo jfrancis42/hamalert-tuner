@@ -1,0 +1,107 @@
+[
+  {
+    "help": "returns vfo in use A or B",
+    "name": "rig.get_AB",
+    "signature": "s:n"
+  },
+  {
+    "help": "return BW of current VFO",
+    "name": "rig.get_bw",
+    "signature": "s:n"
+  },
+  {
+    "help": "return table of BW values",
+    "name": "rig.get_bws",
+    "signature": "s:n"
+  },
+  {
+    "help": "return an info string",
+    "name": "rig.get_info",
+    "signature": "s:n"
+  },
+  {
+    "help": "return MODE of current VFO",
+    "name": "rig.get_mode",
+    "signature": "s:n"
+  },
+  {
+    "help": "return table of MODE values",
+    "name": "rig.get_modes",
+    "signature": "s:n"
+  },
+  {
+    "help": "return sideband (U/L)",
+    "name": "rig.get_sideband",
+    "signature": "s:n"
+  },
+  {
+    "help": "return notch value",
+    "name": "rig.get_notch",
+    "signature": "s:n"
+  },
+  {
+    "help": "return PTT state",
+    "name": "rig.get_ptt",
+    "signature": "s:n"
+  },
+  {
+    "help": "return PWR out",
+    "name": "rig.get_pwrmeter",
+    "signature": "s:n"
+  },
+  {
+    "help": "return Smeter",
+    "name": "rig.get_smeter",
+    "signature": "s:n"
+  },
+  {
+    "help": "return update to info",
+    "name": "rig.get_update",
+    "signature": "s:n"
+  },
+  {
+    "help": "return current VFO in Hz",
+    "name": "rig.get_vfo",
+    "signature": "s:n"
+  },
+  {
+    "help": "returns name of transceiver",
+    "name": "rig.get_xcvr",
+    "signature": "s:n"
+  },
+  {
+    "help": "set VFO A/B",
+    "name": "rig.set_AB",
+    "signature": "s:s"
+  },
+  {
+    "help": "set BW iaw BW table",
+    "name": "rig.set_bw",
+    "signature": "i:i"
+  },
+  {
+    "help": "set L/U pair",
+    "name": "rig.set_BW",
+    "signature": "i:i"
+  },
+  {
+    "help": "set MODE iaw MODE table",
+    "name": "rig.set_mode",
+    "signature": "i:i"
+  },
+  {
+    "help": "set NOTCH value in Hz",
+    "name": "rig.set_notch",
+    "signature": "d:d"
+  },
+  {
+    "help": "set PTT 1/0 (on/off)",
+    "name": "rig.set_ptt",
+    "signature": "i:i"
+  },
+  {
+    "help": "set current VFO in Hz",
+    "name": "rig.set_vfo",
+    "signature": "d:d"
+  }
+]
