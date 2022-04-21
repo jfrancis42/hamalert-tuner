@@ -1,5 +1,15 @@
 [
   {
+    "help": "set current VFO in Hz",
+    "name": "main.set_frequency",
+    "signature": "d:d"
+  },
+  {
+    "help": "returns version std::string",
+    "name": "main.get_version",
+    "signature": "s:n"
+  },
+  {
     "help": "returns vfo in use A or B",
     "name": "rig.get_AB",
     "signature": "s:n"
@@ -7,15 +17,25 @@
   {
     "help": "return BW of current VFO",
     "name": "rig.get_bw",
-    "signature": "s:n"
+    "signature": "A:n"
   },
   {
     "help": "return table of BW values",
     "name": "rig.get_bws",
-    "signature": "s:n"
+    "signature": "A:n"
   },
   {
-    "help": "return an info string",
+    "help": "return BW of vfo A",
+    "name": "rig.get_bwA",
+    "signature": "A:n"
+  },
+  {
+    "help": "return BW of vfo B",
+    "name": "rig.get_bwB",
+    "signature": "A:n"
+  },
+  {
+    "help": "return an info std::string",
     "name": "rig.get_info",
     "signature": "s:n"
   },
@@ -25,9 +45,19 @@
     "signature": "s:n"
   },
   {
+    "help": "return MODE of current VFO A",
+    "name": "rig.get_modeA",
+    "signature": "s:n"
+  },
+  {
+    "help": "return MODE of current VFO B",
+    "name": "rig.get_modeB",
+    "signature": "s:n"
+  },
+  {
     "help": "return table of MODE values",
     "name": "rig.get_modes",
-    "signature": "s:n"
+    "signature": "A:n"
   },
   {
     "help": "return sideband (U/L)",
@@ -37,12 +67,17 @@
   {
     "help": "return notch value",
     "name": "rig.get_notch",
-    "signature": "s:n"
+    "signature": "i:n"
   },
   {
     "help": "return PTT state",
     "name": "rig.get_ptt",
-    "signature": "s:n"
+    "signature": "i:n"
+  },
+  {
+    "help": "return power level control value",
+    "name": "rig.get_power",
+    "signature": "i:n"
   },
   {
     "help": "return PWR out",
@@ -50,9 +85,39 @@
     "signature": "s:n"
   },
   {
+    "help": "return scale for power meter",
+    "name": "rig.get_pwrmeter_scale",
+    "signature": "s:n"
+  },
+  {
+    "help": "return maximum power available",
+    "name": "rig.get_pwrmax",
+    "signature": "s:n"
+  },
+  {
+    "help": "return SWR out",
+    "name": "rig.get_swrmeter",
+    "signature": "s:n"
+  },
+  {
     "help": "return Smeter",
     "name": "rig.get_smeter",
     "signature": "s:n"
+  },
+  {
+    "help": "return Smeter in dBm",
+    "name": "rig.get_DBM",
+    "signature": "s:n"
+  },
+  {
+    "help": "return Smeter in S units",
+    "name": "rig.get_Sunits",
+    "signature": "s:n"
+  },
+  {
+    "help": "return split state",
+    "name": "rig.get_split",
+    "signature": "i:n"
   },
   {
     "help": "return update to info",
@@ -65,18 +130,48 @@
     "signature": "s:n"
   },
   {
+    "help": "return vfo A in Hz",
+    "name": "rig.get_vfoA",
+    "signature": "s:n"
+  },
+  {
+    "help": "return vfo B in Hz",
+    "name": "rig.get_vfoB",
+    "signature": "s:n"
+  },
+  {
     "help": "returns name of transceiver",
     "name": "rig.get_xcvr",
     "signature": "s:n"
   },
   {
+    "help": "returns volume control value",
+    "name": "rig.get_volume",
+    "signature": "i:n"
+  },
+  {
+    "help": "returns rf gain control value",
+    "name": "rig.get_rfgain",
+    "signature": "i:n"
+  },
+  {
+    "help": "returns mic gain control value",
+    "name": "rig.get_micgain",
+    "signature": "i:n"
+  },
+  {
     "help": "set VFO A/B",
     "name": "rig.set_AB",
-    "signature": "s:s"
+    "signature": "n:s"
   },
   {
     "help": "set BW iaw BW table",
     "name": "rig.set_bw",
+    "signature": "i:i"
+  },
+  {
+    "help": "set bandwidth to nearest requested value",
+    "name": "rig.set_bandwidth",
     "signature": "i:i"
   },
   {
@@ -85,23 +180,263 @@
     "signature": "i:i"
   },
   {
+    "help": "set current VFO in Hz",
+    "name": "rig.set_frequency",
+    "signature": "d:d"
+  },
+  {
     "help": "set MODE iaw MODE table",
     "name": "rig.set_mode",
-    "signature": "i:i"
+    "signature": "i:s"
+  },
+  {
+    "help": "set MODE A iaw MODE table",
+    "name": "rig.set_modeA",
+    "signature": "i:s"
+  },
+  {
+    "help": "set MODE B iaw MODE table",
+    "name": "rig.set_modeB",
+    "signature": "i:s"
   },
   {
     "help": "set NOTCH value in Hz",
     "name": "rig.set_notch",
-    "signature": "d:d"
+    "signature": "n:i"
+  },
+  {
+    "help": "set power control level, watts",
+    "name": "rig.set_power",
+    "signature": "n:i"
   },
   {
     "help": "set PTT 1/0 (on/off)",
     "name": "rig.set_ptt",
-    "signature": "i:i"
+    "signature": "n:i"
   },
   {
     "help": "set current VFO in Hz",
     "name": "rig.set_vfo",
     "signature": "d:d"
+  },
+  {
+    "help": "set vfo A in Hz",
+    "name": "rig.set_vfoA",
+    "signature": "d:d"
+  },
+  {
+    "help": "set vfo B in Hz",
+    "name": "rig.set_vfoB",
+    "signature": "d:d"
+  },
+  {
+    "help": "set split 1/0 (on/off)",
+    "name": "rig.set_split",
+    "signature": "n:i"
+  },
+  {
+    "help": "set volume control",
+    "name": "rig.set_volume",
+    "signature": "n:i"
+  },
+  {
+    "help": "set rf gain control",
+    "name": "rig.set_rfgain",
+    "signature": "n:i"
+  },
+  {
+    "help": "set mic gain control",
+    "name": "rig.set_micgain",
+    "signature": "n:i"
+  },
+  {
+    "help": "deprecated; use set_ptt",
+    "name": "rig.set_ptt_fast",
+    "signature": "n:i"
+  },
+  {
+    "help": "deprecated; use set_vfoA",
+    "name": "rig.set_vfoA_fast",
+    "signature": "d:d"
+  },
+  {
+    "help": "deprecated; use set_vfoB",
+    "name": "rig.set_vfoB_fast",
+    "signature": "d:d"
+  },
+  {
+    "help": "set & verify VFO A/B",
+    "name": "rig.set_verify_AB",
+    "signature": "n:s"
+  },
+  {
+    "help": "set & verify BW iaw BW table",
+    "name": "rig.set_verify_bw",
+    "signature": "i:i"
+  },
+  {
+    "help": "set & verify bandwidth to nearest requested value",
+    "name": "rig.set_verify_bandwidth",
+    "signature": "i:i"
+  },
+  {
+    "help": "set & verify L/U pair",
+    "name": "rig.set_verify_BW",
+    "signature": "i:i"
+  },
+  {
+    "help": "set & verify current VFO in Hz",
+    "name": "rig.set_verify_frequency",
+    "signature": "d:d"
+  },
+  {
+    "help": "set & verify MODE iaw MODE table",
+    "name": "rig.set_verify_mode",
+    "signature": "i:s"
+  },
+  {
+    "help": "set & verify MODE A iaw MODE table",
+    "name": "rig.set_verify_modeA",
+    "signature": "i:s"
+  },
+  {
+    "help": "set & verify MODE B iaw MODE table",
+    "name": "rig.set_verify_modeB",
+    "signature": "i:s"
+  },
+  {
+    "help": "set & verify NOTCH value in Hz",
+    "name": "rig.set_verify_notch",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify power control level, watts",
+    "name": "rig.set_verify_power",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify PTT 1/0 (on/off)",
+    "name": "rig.set_verify_ptt",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify vfo A in Hz",
+    "name": "rig.set_verify_vfoA",
+    "signature": "d:d"
+  },
+  {
+    "help": "set & verify vfo B in Hz",
+    "name": "rig.set_verify_vfoB",
+    "signature": "d:d"
+  },
+  {
+    "help": "set & verify split 1/0 (on/off)",
+    "name": "rig.set_verify_split",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify volume control",
+    "name": "rig.set_verify_volume",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify rf gain control",
+    "name": "rig.set_verify_rfgain",
+    "signature": "n:i"
+  },
+  {
+    "help": "set & verify mic gain control",
+    "name": "rig.set_verify_micgain",
+    "signature": "n:i"
+  },
+  {
+    "help": "execute vfo swap",
+    "name": "rig.swap",
+    "signature": "n:n"
+  },
+  {
+    "help": "enable transceiver tune function",
+    "name": "rig.tune",
+    "signature": "n:n"
+  },
+  {
+    "help": "execute CAT std::string",
+    "name": "rig.cat_string",
+    "signature": "s:s"
+  },
+  {
+    "help": "priority CAT std::string",
+    "name": "rig.cat_priority",
+    "signature": "s:s"
+  },
+  {
+    "help": "shutdown xcvr & flrig",
+    "name": "rig.shutdown",
+    "signature": "i:n"
+  },
+  {
+    "help": "set cwio WPM",
+    "name": "rig.cwio_set_wpm",
+    "signature": "n:i"
+  },
+  {
+    "help": "send text via cwio interface",
+    "name": "rig.cwio_text",
+    "signature": "i:s"
+  },
+  {
+    "help": "send text via fskio interface",
+    "name": "rig.fskio_text",
+    "signature": "i:s"
+  },
+  {
+    "help": "modify vfo A +/- NNN Hz",
+    "name": "rig.mod_vfoA",
+    "signature": "d:d"
+  },
+  {
+    "help": "modify vfo B +/- NNN Hz",
+    "name": "rig.mod_vfoB",
+    "signature": "d:d"
+  },
+  {
+    "help": "modify volume control +/- NNN %",
+    "name": "rig.mod_vol",
+    "signature": "n:i"
+  },
+  {
+    "help": "modify power control level +/- NNN watts",
+    "name": "rig.mod_pwr",
+    "signature": "n:i"
+  },
+  {
+    "help": "modify rf gain by +/- NNN units",
+    "name": "rig.mod_rfg",
+    "signature": "n:i"
+  },
+  {
+    "help": "modify cwio WPM by +/- NNN wpm",
+    "name": "rig.mod_cwio_wpm",
+    "signature": "n:i"
+  },
+  {
+    "help": "modify bandwidth +- to nearest new value",
+    "name": "rig.mod_bw",
+    "signature": "i:i"
+  },
+  {
+    "help": "set vfo B to vfo A freq/mode",
+    "name": "rig.vfoA2B",
+    "signature": "n:n"
+  },
+  {
+    "help": "set freq B to freq A",
+    "name": "rig.freqA2B",
+    "signature": "n:n"
+  },
+  {
+    "help": "set mode B to mode A",
+    "name": "rig.modeA2B",
+    "signature": "n:n"
   }
 ]

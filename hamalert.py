@@ -4,14 +4,16 @@
 import xmlrpc.client
 import json
 import time
+import os
+import logging
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
+from queue import Queue
+from threading import Thread, Lock
 
-s=xmlrpc.client.ServerProxy('http://127.0.0.1:12345')
-print("Connected to: "+s.rig.get_xcvr())
-
-app=Flask(__name__)
-api=Api(app)
+f=open('config.json')
+config=json.load(f)
+f.close()
 
 def set_mode(mode):
     s.rig.set_mode(mode.upper())
@@ -19,7 +21,19 @@ def set_mode(mode):
 def set_freq(hz):
     s.rig.set_vfo(hz*1.0)
     
-class Users(Resource):
+def set_volume(n):
+    s.rig.set_verify_volume(n)
+
+def get_volume():
+    return(s.rig.get_volume())
+
+def get_rig():
+    return(s.rig.get_xcvr())
+
+def tune():
+    s.rig.tune()
+
+class Hamalert(Resource):
     def post(self):
         parser=reqparse.RequestParser()
         parser.add_argument('fullCallsign',required=False)
@@ -59,34 +73,99 @@ class Users(Resource):
         parser.add_argument('wwffName',required=False)
         parser.add_argument('wwffDivision',required=False)
         parser.add_argument('wwffRef',required=False)
-        args=parser.parse_args()
-        print(args)
-        print("")
-        print("Call: "+args['callsign'])
-        print("Freq: "+args['frequency'])
-        print("Mode: "+args['mode'])
-        # SOTA
-        if(args['source']=='sotawatch'):
-            print("SOTA")
-            print("Summit: "+args['summitRef']+" - "+args['summitName'])
-            print("Points: "+args['summitPoints'])
-        # POTA/WWFF
-        if(args['wwffName'] or args['wwffDivision'] or args['wwffRef']):
-            print("POTA/WWFF")
-            print("Park: "+args['wwffDivision']+" - "+args['wwffRef']+" - "+args['wwffName'])
-        # IOTA
-        if(args['iotaGroupRef'] or args['iotaGroupName']):
-            print("IOTA")
-            print("Island: "+args['iotaGroupRef']+" - "+args['iotaGroupName'])
-        #        if(args['mode'].upper() in s.rig.get_modes()):
-        set_mode(args['mode'])
-        set_freq(float(args['frequency'])*1000000.0)
-        return({'n0gq':"73"},200)
+        lock.acquire()
+        q.put(parser.parse_args())
+        lock.release()
+        return({mycall:"73"},200)
 
-api.add_resource(Users, '/hamalert')
+def ha_listener(host,port):
+    print("Starting network listener...")
+    app.run(host,port,False)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0",port=8001,debug=True)
+    if(int(config['debug'])==0):
+        debug=False
+    else:
+        debug=True
+    if(int(config['auto_tine'])==0):
+        auto_tune=False
+    else:
+        auto_tune=True
+    mycall=config['call']
+    mute_level=int(config['mute_level'])
+    listen_time=int(config['listen_time'])
+
+    last=0
+
+    q=Queue()
+    lock=Lock()
+
+    s=xmlrpc.client.ServerProxy('http://'+config['fldigi_ip']+':'+str(config['fldigi_port']))
+    listen_level=get_volume()
+    if(listen_level==0):
+        listen_level=15
+    print("Radio: "+get_rig())
+    print("Volume: "+str(listen_level))
+    print()
+    
+    app=Flask(__name__)
+    api=Api(app)
+    api.add_resource(Hamalert, '/hamalert')
+
+    t1=Thread(target=ha_listener,args=(config['server_listen_ip'],int(config['server_listen_port'])))
+    t1.start()
+    logging.getLogger('werkzeug').disabled = True
+    os.environ['WERKZEUG_RUN_MAIN'] = 'true'
+
+    while(True):
+        if(not(q.empty())):
+            args=q.get()
+
+            if(debug):
+                print()
+                print(args)
+            if(args['mode'] and
+               args['callsign'] and
+               args['frequency']):
+                print()
+                # SOTA
+                if(args['source']=='sotawatch'):
+                    print("SOTA")
+                    print("Summit: "+args['summitRef']+" - "+args['summitName'])
+                    print("Points: "+args['summitPoints'])
+                # POTA/WWFF
+                if(args['wwffName'] or args['wwffDivision'] or args['wwffRef']):
+                    print("POTA/WWFF")
+                    print("Park: "+args['wwffDivision']+" - "+args['wwffRef']+" - "+args['wwffName'])
+                # IOTA
+                if(args['iotaGroupRef'] or args['iotaGroupName']):
+                    print("IOTA")
+                    print("Island: "+args['iotaGroupRef']+" - "+args['iotaGroupName'])
+                print("Call: "+args['callsign'])
+                print("Freq: "+args['frequency'])
+                print("Mode: "+args['mode'])
+                if(args['entity']):
+                    print("Entity: "+args['entity'])
+                if(args['state']):
+                    print("State: "+args['state'])
+                mode=args['mode']
+                if(mode=="ssb"):
+                    if(float(args['frequency'])>10.0):
+                        mode="usb"
+                    else:
+                        mode="lsb"
+                set_mode(mode)
+                set_freq(float(args['frequency'])*1000000.0)
+                set_volume(listen_level)
+                last=time.time()
+                f=float(args['frequency'])
+                if(auto_tune):
+                    tune()
+
+        time.sleep(0.5)
+        if(int(time.time())-listen_time>last):
+            if(get_volume()==listen_level):
+                set_volume(mute_level)
 
 # Local Variables:
 # mode: Python
