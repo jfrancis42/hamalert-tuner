@@ -1,11 +1,11 @@
 {
     "debug": 0,
-    "call": "N0GQ",
-    "auto_tine": 1,
+    "call": "B0GUS",
+    "auto_tune": 1,
     "mute_level": 0,
     "listen_time": 60,
-    "fldigi_ip": "127.0.0.1",
-    "fldigi_port": 12345,
+    "flrig_ip": "127.0.0.1",
+    "flrig_port": 12345,
     "server_listen_ip": "0.0.0.0",
     "server_listen_port": 8001
 }

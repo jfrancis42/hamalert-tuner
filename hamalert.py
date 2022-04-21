@@ -87,7 +87,7 @@ if __name__ == '__main__':
         debug=False
     else:
         debug=True
-    if(int(config['auto_tine'])==0):
+    if(int(config['auto_tune'])==0):
         auto_tune=False
     else:
         auto_tune=True
@@ -100,7 +100,7 @@ if __name__ == '__main__':
     q=Queue()
     lock=Lock()
 
-    s=xmlrpc.client.ServerProxy('http://'+config['fldigi_ip']+':'+str(config['fldigi_port']))
+    s=xmlrpc.client.ServerProxy('http://'+config['flrig_ip']+':'+str(config['flrig_port']))
     listen_level=get_volume()
     if(listen_level==0):
         listen_level=15
@@ -126,7 +126,8 @@ if __name__ == '__main__':
                 print(args)
             if(args['mode'] and
                args['callsign'] and
-               args['frequency']):
+               args['frequency'] and
+               get_volume()==0):
                 print()
                 # SOTA
                 if(args['source']=='sotawatch'):
