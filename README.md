@@ -122,6 +122,11 @@ When you're done, click "Save".
 
 First, fire up flrig and make sure it's talking to your radio. If that's not working, nothing that follows will work, either. Now run the hamalert-tuner software. On FreeBSD, Linux, and Mac, you open a terminal window, cd to the directory where you downloaded the code and config file, and type "./hamalert.py". I've never tried this on Windows, but there's no reason it shouldn't work. You should be able to run it in a command window with either "python3 hamalert.py" or "python hamalert.py". Note that you MUST be in the directory that contains the hamalert.py script, and the config.json file MUST be in the same directory. In future versions of the code, I'll make this a little more flexible (ie, you can keep the config.json file in your homedir, for example).
 
+If python complains about missing libraries, you can use pip3 to
+install them (ie, "pip3 install name-of-missing-library"). Don't know
+the exact method for doing this on Windows, but duckduckgo.com is your
+friend...
+
 
 
 73 and GL, Jeff/N0GQ
