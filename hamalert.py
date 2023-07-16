@@ -11,9 +11,8 @@ from flask_restful import Resource, Api, reqparse
 from queue import Queue
 from threading import Thread, Lock
 
-f=open('config.json')
-config=json.load(f)
-f.close()
+with open('config.json') as config_file:
+    config=json.load(config_file)
 
 def set_mode(mode):
     s.rig.set_mode(mode.upper())
