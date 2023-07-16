@@ -100,12 +100,12 @@ if __name__ == '__main__':
     q=Queue()
     lock=Lock()
 
-    s=xmlrpc.client.ServerProxy('http://'+config['flrig_ip']+':'+str(config['flrig_port']))
+    s=xmlrpc.client.ServerProxy(f'http://{config["flrig_ip"]}:{str(config["flrig_port"])")
     listen_level=get_volume()
     if(listen_level==0):
         listen_level=15
-    print("Radio: "+get_rig())
-    print("Volume: "+str(listen_level))
+    print(f"Radio: {get_rig()}")
+    print(f"Volume: {str(listen_level)}")
     print()
     
     app=Flask(__name__)
@@ -132,23 +132,23 @@ if __name__ == '__main__':
                 # SOTA
                 if(args['source']=='sotawatch'):
                     print("SOTA")
-                    print("Summit: "+args['summitRef']+" - "+args['summitName'])
-                    print("Points: "+args['summitPoints'])
+                    print(f"Summit: {args['summitRef']} - {args['summitName']}")
+                    print(f"Points: {args['summitPoints']}")
                 # POTA/WWFF
                 if(args['wwffName'] or args['wwffDivision'] or args['wwffRef']):
                     print("POTA/WWFF")
-                    print("Park: "+args['wwffDivision']+" - "+args['wwffRef']+" - "+args['wwffName'])
+                    print(f"Park: {args['wwffDivision']} - {args['wwffRef']} - {args['wwffName']}")
                 # IOTA
                 if(args['iotaGroupRef'] or args['iotaGroupName']):
                     print("IOTA")
-                    print("Island: "+args['iotaGroupRef']+" - "+args['iotaGroupName'])
-                print("Call: "+args['callsign'])
-                print("Freq: "+args['frequency'])
-                print("Mode: "+args['mode'])
+                    print(f"Island: {args['iotaGroupRef']} - {args['iotaGroupName']}")
+                print(f"Call: {args['callsign']}")
+                print(f"Freq: {args['frequency']}")
+                print(f"Mode: {args['mode']}")
                 if(args['entity']):
-                    print("Entity: "+args['entity'])
+                    print(f"Entity: {args['entity']}")
                 if(args['state']):
-                    print("State: "+args['state'])
+                    print(f"State: {args['state']}")
                 mode=args['mode']
                 if(mode=="ssb"):
                     if(float(args['frequency'])>10.0):
