@@ -129,6 +129,7 @@ if __name__ == '__main__':
                args['frequency'] and
                get_volume()==0):
                 print()
+                print("Time: "+args['time'])
                 # SOTA
                 if(args['source']=='sotawatch'):
                     print("SOTA")
